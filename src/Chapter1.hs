@@ -544,13 +544,9 @@ Casual reminder about adding top-level type signatures for all functions :)
 -}
 mid :: Int -> Int -> Int -> Int
 mid x y z
-  | x == y && y == z = x
-  | x == y = x
-  | y == z = y
-  | z == x = z
-  | x > y && x < z || x > z && x < y = x
-  | y > x && y < z || y > z && y < x = y
-  | z > x && z < y || z > y && z < x = z
+  | x >= y && x <= z || x > z && x < y = x
+  | y >= x && y <= z || y > z && y < x = y
+  | otherwise = z
 
 {- |
 =⚔️= Task 8
@@ -632,10 +628,8 @@ specifying complex expressions.
 -}
 sumLast2 :: Int -> Int
 sumLast2 n =
-  let lastDigit = mod (abs n) 10
-      preLastDigit = mod (div (abs n) 10) 10
-  in lastDigit + preLastDigit
-
+  let (last2, last1) = divMod (abs n) 10
+  in mod last2 10 + last1
 
 {- |
 =💣= Task 10*
@@ -655,10 +649,10 @@ You need to use recursion in this task. Feel free to return to it later, if you
 aren't ready for this boss yet!
 -}
 firstDigit :: Int -> Int
-firstDigit n = if div n 10 == 0
-  then n
-  else firstDigit (div n 10)
-
+firstDigit n = if div absOfN 10 == 0
+  then absOfN
+  else firstDigit (div absOfN 10)
+  where absOfN = abs n
 
 {-
 You did it! Now it is time to open pull request with your changes
