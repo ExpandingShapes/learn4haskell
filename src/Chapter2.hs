@@ -625,6 +625,16 @@ Write a function that takes elements of a list only on even positions.
 >>> takeEven [2, 1, 3, 5, 4]
 [2,3,4]
 -}
+'takeEven :: [a] -> [a]
+'takeEven list = go list []
+   where
+     go :: [a] -> [a] -> [a]
+     go list newList = 
+       case list of
+         [] -> reverse newList
+         (x : []) -> reverse (x : newList)
+         (x1 : x2 : xs) -> go xs (x1 : newList)
+         
 takeEven :: [a] -> [a]
 takeEven list = go list []
   where
